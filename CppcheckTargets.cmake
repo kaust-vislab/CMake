@@ -86,15 +86,20 @@ function(add_cppcheck _name)
       SET(_exclude_pattern ".*moc_.*\\.cxx$")
     endif()
 
+    
     get_target_property(_cppcheck_sources "${_name}" SOURCES)
-    set(_files)
-    foreach(_source ${_cppcheck_sources})
-      get_source_file_property(_cppcheck_lang "${_source}" LANGUAGE)
-      get_source_file_property(_cppcheck_loc "${_source}" LOCATION)
-      if("${_cppcheck_lang}" MATCHES "CXX" AND NOT ${_cppcheck_loc} MATCHES ${_exclude_pattern})
-        list(APPEND _files "${_cppcheck_loc}")
-      endif()
-    endforeach()
+    if(_cppcheck_sources_FOUND)
+      set(_files)
+      foreach(_source ${_cppcheck_sources})
+        get_source_file_property(_cppcheck_lang "${_source}" LANGUAGE)
+        get_source_file_property(_cppcheck_loc "${_source}" LOCATION)
+        if("${_cppcheck_lang}" MATCHES "CXX" AND NOT ${_cppcheck_loc} MATCHES ${_exclude_pattern})
+          list(APPEND _files "${_cppcheck_loc}")
+        endif()
+      endforeach()
+    else() # nothing to check
+      return()
+    endif()
 
     if(NOT _files) # nothing to check
       return()
