@@ -15,11 +15,18 @@ find_path(SuperCollider_INCLUDE_DIR
   PATHS ${CMAKE_INCLUDE_PATH}
 )
 
-# Finally the library itself
-find_library(SuperCollider_LIBRARY
+# Finally the libraries itself
+find_library(SuperCollider_LIBRARY1
   NAMES libscsynth scsynth
   PATHS ${CMAKE_LIBRARY_PATH}
 )
+
+# Finally the libraries itself
+find_library(SuperCollider_LIBRARY2
+  NAMES libsclang sclang
+  PATHS ${CMAKE_LIBRARY_PATH}
+)
+
 
 # MADHU: Seems like libfind_process does not really set SuperCollider_FOUND to TRUE
 # so doing this myself.
@@ -34,6 +41,6 @@ find_library(SuperCollider_LIBRARY
 # NOTE: Singular variables for this library, plural for libraries this this lib depends on.
 # MADHU: No idea what the following does ??
 set(SuperCollider_PROCESS_INCLUDES SuperCollider_INCLUDE_DIR)
-set(SuperCollider_PROCESS_LIBS SuperCollider_LIBRARY)
+set(SuperCollider_PROCESS_LIBS SuperCollider_LIBRARY1 SuperCollider_LIBRARY2)
 libfind_process(SuperCollider)
 
