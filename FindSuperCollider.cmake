@@ -10,10 +10,27 @@
 include(LibFindMacros)
 
 # Include dir
-find_path(SuperCollider_INCLUDE_DIR
-  NAMES SuperCollider/lang/SC_LanguageClient.h
+find_path(SuperCollider_INCLUDE_DIR1
+  NAMES SC_LanguageClient.h
   PATHS ${CMAKE_INCLUDE_PATH}
 )
+
+find_path(SuperCollider_INCLUDE_DIR2
+  NAMES SC_Types.h
+  PATHS ${CMAKE_INCLUDE_PATH}
+)
+
+find_path(SuperCollider_INCLUDE_DIR3
+  NAMES SC_World.h
+  PATHS ${CMAKE_INCLUDE_PATH}
+)
+
+find_path(SuperCollider_INCLUDE_DIR4
+  NAMES SC_Lib.h
+  PATHS ${CMAKE_INCLUDE_PATH}
+)
+
+
 
 # Finally the libraries itself
 find_library(SuperCollider_LIBRARY1
@@ -40,7 +57,13 @@ find_library(SuperCollider_LIBRARY2
 # Set the include dir variables and the libraries and let libfind_process do the rest.
 # NOTE: Singular variables for this library, plural for libraries this this lib depends on.
 # MADHU: No idea what the following does ??
-set(SuperCollider_PROCESS_INCLUDES SuperCollider_INCLUDE_DIR)
+set(SuperCollider_PROCESS_INCLUDES 
+  SuperCollider_INCLUDE_DIR1 
+  SuperCollider_INCLUDE_DIR2  
+  SuperCollider_INCLUDE_DIR3 
+  SuperCollider_INCLUDE_DIR4 
+)
+
 set(SuperCollider_PROCESS_LIBS SuperCollider_LIBRARY1 SuperCollider_LIBRARY2)
 libfind_process(SuperCollider)
 
